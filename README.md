@@ -1,14 +1,16 @@
 ## Spring Boot implementation scenarios
 This sample shows different scenarios in implementing SpringBoot based microservice
 
-#### 1. Using same end-point for different MIME types
+#### 1. Using same end-point for different media types
 - URI for JSON: localhost:8080/sample/transaction
 - URI for XML: localhost:8080/sample/transaction?mediaType=XML
-- Here application/json is the default MIME type
+- Here application/json is the default media type
+- Implementation classes: sampleWebConfig
 #### 2. Create JSON and XML from Java Model
 - URI: localhost:8080/sample/createjsonxml
 - Creates JSON String/file and XML String/file from TransactionDetail java model
 - ShoppingBill.json and ShoppingBill.xml are created in base folder
+- Implementation: @XmlRootElement and @JsonIgnoreProperties in TransactionDetail
 #### 3. Create Java Model from JSON string and extract values
 - URI for JSON: localhost:8080/sample/postJSON
 - For RequestBody use content of ShoppingBill.json created in section 2
@@ -61,5 +63,12 @@ This sample shows different scenarios in implementing SpringBoot based microserv
 	}
 }
 ```
-
-
+- In JSON String input, customerName, totalBill value, itemName and quantity value for item 01 is null.
+- Following violation message will be printed
+```
+Value cannot be null
+Item Name is compulsory
+Customer Name is compulsory
+Value cannot be null
+```
+- Implementation: Validation annotations in NumericParameter, TabularRow and TransactionDetail. @Valid used for nested class.
