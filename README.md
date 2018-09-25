@@ -1,5 +1,9 @@
 ## Spring Boot implementation scenarios
 This sample shows different scenarios in implementing SpringBoot based microservice
+	- Centralized exception handling using ControllerAdvice
+	- Same end-point for different media types
+	- Javabean validation using JSR 380
+	- Using JSON/XML 
 
 #### 1. Using same end-point for different media types
 - URI for JSON: localhost:8080/sample/transaction
