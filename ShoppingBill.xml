@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<transactionDetail>
+    <address>dummy street</address>
+    <customerName>John</customerName>
+    <items>
+        <entry>
+            <key>01</key>
+            <value>
+                <itemName>Rice</itemName>
+                <price>
+                    <precision>2</precision>
+                    <unit>rs</unit>
+                    <value>40.0</value>
+                </price>
+                <quantity>
+                    <precision>0</precision>
+                    <unit>kg</unit>
+                    <value>5.0</value>
+                </quantity>
+            </value>
+        </entry>
+        <entry>
+            <key>02</key>
+            <value>
+                <itemName>Milk</itemName>
+                <price>
+                    <precision>2</precision>
+                    <unit>rs</unit>
+                    <value>20.0</value>
+                </price>
+                <quantity>
+                    <precision>0</precision>
+                    <unit>lt</unit>
+                    <value>2.0</value>
+                </quantity>
+            </value>
+        </entry>
+    </items>
+    <totalBill>
+        <precision>2</precision>
+        <unit>rs</unit>
+        <value>250.0</value>
+    </totalBill>
+</transactionDetail>

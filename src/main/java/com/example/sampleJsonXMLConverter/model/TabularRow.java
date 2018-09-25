@@ -3,6 +3,7 @@ package com.example.sampleJsonXMLConverter.model;
 import java.io.Serializable;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -17,9 +18,11 @@ public class TabularRow implements Serializable
 	
 	@NotBlank(message = "Item Name is compulsory")
 	private String itemName;
-	@Valid	
+	@Valid
+	@NotNull(message = "Quantity is compulsory")
 	private NumericParameter quantity;
 	@Valid	
+	@NotNull(message = "Price is compulsory")
 	private NumericParameter price;
 	public String getItemName() {
 		return itemName;

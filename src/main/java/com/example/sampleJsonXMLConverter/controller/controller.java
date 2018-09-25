@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.sampleJsonXMLConverter.exception.ValidationException;
 import com.example.sampleJsonXMLConverter.model.NumericParameter;
 import com.example.sampleJsonXMLConverter.model.TabularRow;
 import com.example.sampleJsonXMLConverter.model.TransactionDetail;
@@ -76,7 +77,7 @@ public class controller
 	// 1. From Java Model create JSON String and JSON file
 	// 2. From Java Model create XML String and XML file
 	@RequestMapping(value = "/createjsonxml",method = RequestMethod.POST)
-    public void createJSONnXML() 
+    public ResponseEntity<Object> createJSONnXML() 
     {
 		TransactionDetail transaction = new TransactionDetail();
 		transaction.setCustomerName("John");
@@ -168,12 +169,13 @@ public class controller
     	{
     		System.out.println(ex.toString());
     	}
+		return new ResponseEntity<Object>("Processing Done", HttpStatus.OK);
 	}
 	
 	// 1. From JSON String create Java Model
 	// 2. Extract values from the Java Model
 	@RequestMapping(value = "/postJSON",method = RequestMethod.POST)
-    public void postJSON(@RequestBody String file) 
+    public ResponseEntity<Object> postJSON(@RequestBody String file) 
     {
 		ObjectMapper mapper = new ObjectMapper();
 		TransactionDetail transaction = null;
@@ -206,13 +208,14 @@ public class controller
        	{
     		System.out.println(ex.toString());
        	}
+		return new ResponseEntity<Object>("Processing Done", HttpStatus.OK);
     }
 	
 	// 1. From JSON String create Java Model
 	// 2. Extract values from the Java Model
 	// 3. Create JSON String from the Java Model
 	@RequestMapping(value = "/postXML",method = RequestMethod.POST)
-    public void postXML(@RequestBody String file) 
+    public ResponseEntity<Object> postXML(@RequestBody String file) 
     {
 		TransactionDetail transaction = null;
 		
@@ -255,14 +258,15 @@ public class controller
     	{
     		System.out.println(ex.toString());
     	}
+		return new ResponseEntity<Object>("Processing Done", HttpStatus.OK);
     }
 	
 	// 1. Usage of Java bean validation
 	// 2. Put some elements in JSON String as null and check validation
 	@RequestMapping(value = "/postJSON/validate",method = RequestMethod.POST)
-    public void validation(@RequestBody String file) 
+    public ResponseEntity<Object> validation(@RequestBody String file) throws ValidationException
     {
-		// Test Input JSON String = {"customerName":null,"address":"dummy street","totalBill":{"value":null,"unit":"rs","precision":2},"items":{"01":{"itemName":null,"quantity":{"value":null,"unit":"kg","precision":0},"price":{"value":40.0,"unit":"rs","precision":2}},"02":{"itemName":"Milk","quantity":{"value":2.0,"unit":"lt","precision":0},"price":{"value":20.0,"unit":"rs","precision":2}}}}
+		// Test Input JSON String = {"customerName":"Brijesh","address":"dummy street","totalBill":{"value":null,"unit":"rs","precision":2},"items":{"01":{"itemName":null,"quantity":{"value":null,"unit":"kg","precision":0},"price":{"value":40.0,"unit":"rs","precision":2}},"02":{"itemName":"Milk","quantity":{"value":2.0,"unit":"lt","precision":0},"price":{"value":20.0,"unit":"rs","precision":2}}}}
 		ObjectMapper mapper = new ObjectMapper();
 		TransactionDetail transaction = null;
 		
@@ -278,11 +282,13 @@ public class controller
 			for (ConstraintViolation<TransactionDetail> violation : violations) {
 			    System.out.println(violation.getMessage()); 
 			}
+			if(violations.size()>0)
+				throw new ValidationException("Invalid JSON passed as Input");
     	}
        	catch(Exception ex)
        	{
-    		System.out.println(ex.toString());
+			throw new ValidationException("Invalid JSON passed as Input");
        	}
+		return new ResponseEntity<Object>("Done", HttpStatus.OK);
     }
-	
 }

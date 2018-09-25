@@ -1,0 +1,1 @@
+{"customerName":"John","address":"dummy street","totalBill":{"value":250.0,"unit":"rs","precision":2},"items":{"01":{"itemName":"Rice","quantity":{"value":5.0,"unit":"kg","precision":0},"price":{"value":40.0,"unit":"rs","precision":2}},"02":{"itemName":"Milk","quantity":{"value":2.0,"unit":"lt","precision":0},"price":{"value":20.0,"unit":"rs","precision":2}}}}

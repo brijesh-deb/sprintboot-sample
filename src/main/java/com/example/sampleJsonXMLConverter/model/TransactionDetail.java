@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -17,13 +18,15 @@ public class TransactionDetail implements Serializable
 {
 	private static final long serialVersionUID = -232691436798773261L;
 
-	@NotBlank(message = "Customer Name is compulsory")
+	@NotEmpty(message = "Customer Name is compulsory")
 	private String customerName;
 	@NotBlank(message = "Address is compulsory")
 	private String address;
 	@Valid	
+	@NotNull(message = "TotalBill is compulsory")
 	private NumericParameter totalBill;
 	@Valid
+	@NotNull(message = "Items is compulsory")
 	private Map<String,TabularRow> items;
 	
 	public String getCustomerName() {
