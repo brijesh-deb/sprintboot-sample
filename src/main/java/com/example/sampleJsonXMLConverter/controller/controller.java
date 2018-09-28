@@ -1,12 +1,17 @@
 package com.example.sampleJsonXMLConverter.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 
 import javax.validation.Validation;
@@ -269,6 +274,7 @@ public class controller
 		// Test Input JSON String = {"customerName":"Brijesh","address":"dummy street","totalBill":{"value":null,"unit":"rs","precision":2},"items":{"01":{"itemName":null,"quantity":{"value":null,"unit":"kg","precision":0},"price":{"value":40.0,"unit":"rs","precision":2}},"02":{"itemName":"Milk","quantity":{"value":2.0,"unit":"lt","precision":0},"price":{"value":20.0,"unit":"rs","precision":2}}}}
 		ObjectMapper mapper = new ObjectMapper();
 		TransactionDetail transaction = null;
+		String validationMsg="";
 		
 		try
     	{
@@ -280,15 +286,56 @@ public class controller
 			Validator validator = factory.getValidator();
 			Set<ConstraintViolation<TransactionDetail>> violations = validator.validate(transaction);
 			for (ConstraintViolation<TransactionDetail> violation : violations) {
-			    System.out.println(violation.getMessage()); 
+				validationMsg = validationMsg+"|"+violation.getMessage(); 
 			}
 			if(violations.size()>0)
-				throw new ValidationException("Invalid JSON passed as Input");
+				throw new ValidationException(validationMsg);
     	}
+       	catch(ValidationException ex)
+		{
+       		throw new ValidationException(validationMsg);
+		}
        	catch(Exception ex)
        	{
 			throw new ValidationException("Invalid JSON passed as Input");
        	}
 		return new ResponseEntity<Object>("Done", HttpStatus.OK);
+    }
+	
+	// 1. Read file from resource folder in application jar
+	@RequestMapping(value = "/readresource",method = RequestMethod.GET)
+    public ResponseEntity<Object> readresource()
+    {
+		InputStream inputStream = null;
+		BufferedReader br = null;
+		String sCurrentLine;
+		try
+		{
+			ClassPathResource classPathResource = new ClassPathResource("test.txt");
+			inputStream = classPathResource.getInputStream();
+			br = new BufferedReader(new InputStreamReader(inputStream));
+			
+			while ((sCurrentLine = br.readLine()) != null)
+				System.out.println(sCurrentLine);
+		}
+		catch(Exception ex)
+		{
+			System.out.println(ex.toString());
+		}
+		finally 
+		{
+			try 
+			{
+				if (br != null)
+					br.close();
+				if(inputStream !=null)
+					inputStream.close();
+			}
+			catch (IOException ex) 
+			{
+				ex.printStackTrace();
+			}
+		}	
+		return new ResponseEntity<Object>("Read file from resource folder", HttpStatus.OK);
     }
 }

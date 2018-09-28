@@ -20,11 +20,16 @@ public class TransactionDetail implements Serializable
 
 	@NotEmpty(message = "Customer Name is compulsory")
 	private String customerName;
+
 	@NotBlank(message = "Address is compulsory")
 	private String address;
+	
+	private Boolean paid;
+	
 	@Valid	
 	@NotNull(message = "TotalBill is compulsory")
 	private NumericParameter totalBill;
+	
 	@Valid
 	@NotNull(message = "Items is compulsory")
 	private Map<String,TabularRow> items;

@@ -2,21 +2,21 @@ package com.example.sampleJsonXMLConverter.exception;
 
 import java.util.List;
 
-public class ExceptionResponse {
+public class ValidationResponse {
 
-	private String errorMessage;
 	private String requestedURI;
+	private List<String> errorMessages;
 
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
 	public String getRequestedURI() {
 		return requestedURI;
 	}
 	public void setRequestedURI(String requestedURI) {
 		this.requestedURI = requestedURI;
+	}
+	public List<String> getErrorMessages() {
+		return errorMessages;
+	}
+	public void setErrorMessages(List<String> errorMessages) {
+		this.errorMessages = errorMessages;
 	}
 }
