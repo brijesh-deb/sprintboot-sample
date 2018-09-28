@@ -6,27 +6,27 @@ This sample shows different scenarios in implementing SpringBoot based microserv
 	- Using JSON/XML 
 
 #### 1. Using same end-point for different media types
-- URI for JSON: localhost:8080/sample/transaction
-- URI for XML: localhost:8080/sample/transaction?mediaType=XML
+- URI for JSON: localhost:8090/sample/transaction
+- URI for XML: localhost:8090/sample/transaction?mediaType=XML
 - Here application/json is the default media type
 - Implementation classes: sampleWebConfig
 #### 2. Create JSON and XML from Java Model
-- URI: localhost:8080/sample/createjsonxml
+- URI: localhost:8090/sample/createjsonxml
 - Creates JSON String/file and XML String/file from TransactionDetail java model
 - ShoppingBill.json and ShoppingBill.xml are created in base folder
 - Implementation: @XmlRootElement and @JsonIgnoreProperties in TransactionDetail
 #### 3. Create Java Model from JSON string and extract values
-- URI for JSON: localhost:8080/sample/postJSON
+- URI for JSON: localhost:8090/sample/postJSON
 - For RequestBody use content of ShoppingBill.json created in section 2
 - Create Java model from input JSON string using ObjectMapper
 - Individual values are extracted from the Java model
 #### 3. Create Java Model from XML string and extract values
-- URI for JSON: localhost:8080/sample/postXML
+- URI for JSON: localhost:8090/sample/postXML
 - For RequestBody use content of ShoppingBill.xml created in section 2
 - Create Java model from input XML string using JAXB unmarshal
 - Individual values are extracted from the Java model
 #### 4. Java bean validation using JSR 380
-- URI for JSON: localhost:8080/sample/postJSON/validate
+- URI for JSON: localhost:8090/sample/postJSON/validate
 - RequestBody
 ```
 {
@@ -76,3 +76,6 @@ Customer Name is compulsory
 Value cannot be null
 ```
 - Implementation: Validation annotations in NumericParameter, TabularRow and TransactionDetail. @Valid used for nested class.
+#### 5. Read file resource folder in jar
+- URI for JSON: localhost:8090/sample/readresource
+
