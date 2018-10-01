@@ -7,27 +7,27 @@ This sample shows different scenarios in implementing SpringBoot based microserv
 - Read file from resource folder in Jar 
 
 #### 1. Using same end-point for different media types
-- URI for JSON: localhost:8090/sample/transaction
-- URI for XML: localhost:8090/sample/transaction?mediaType=XML
+- URI for JSON: localhost:8090/sample/transaction [GET]
+- URI for XML: localhost:8090/sample/transaction?mediaType=XML   [GET]
 - Here application/json is the default media type
 - Implementation classes: sampleWebConfig
 #### 2. Create JSON and XML from Java Model
-- URI: localhost:8090/sample/createjsonxml
+- URI: localhost:8090/sample/createjsonxml	[POST]
 - Creates JSON String/file and XML String/file from TransactionDetail java model
 - ShoppingBill.json and ShoppingBill.xml are created in base folder
 - Implementation: @XmlRootElement and @JsonIgnoreProperties in TransactionDetail
 #### 3. Create Java Model from JSON string and extract values
-- URI for JSON: localhost:8090/sample/postJSON
+- URI for JSON: localhost:8090/sample/postJSON	[POST]
 - For RequestBody use content of ShoppingBill.json created in section 2
 - Create Java model from input JSON string using ObjectMapper
 - Individual values are extracted from the Java model
 #### 3. Create Java Model from XML string and extract values
-- URI for JSON: localhost:8090/sample/postXML
+- URI for JSON: localhost:8090/sample/postXML	[POST]
 - For RequestBody use content of ShoppingBill.xml created in section 2
 - Create Java model from input XML string using JAXB unmarshal
 - Individual values are extracted from the Java model
 #### 4. Java bean validation using JSR 380
-- URI for JSON: localhost:8090/sample/postJSON/validate
+- URI for JSON: localhost:8090/sample/postJSON/validate	[POST]
 - RequestBody
 ```
 {
@@ -78,5 +78,12 @@ Value cannot be null
 ```
 - Implementation: Validation annotations in NumericParameter, TabularRow and TransactionDetail. @Valid used for nested class.
 #### 5. Read file resource folder in jar
-- URI for JSON: localhost:8090/sample/readresource
+- URI for JSON: localhost:8090/sample/readresource	[GET]
+#### 6. Use Actuator to shutdown
+- Create jar: mvn clean package
+- Start application: java -jar target\sampleJsonXMLConverter-0.0.1-SNAPSHOT.jar
+- Check that the application has started
+- To shutdown application: localhost:8090/shutdown [POST]
+- Implementation: actuator dependency in pom.xml, application.properties
+
 
