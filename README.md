@@ -4,7 +4,8 @@ This sample shows different scenarios in implementing SpringBoot based microserv
 - Same end-point for different media types
 - Javabean validation using JSR 380
 - Using JSON/XML
-- Read file from resource folder in Jar 
+- Read file from resource folder in Jar
+- Shutdown service using Actuator
 
 #### 1. Using same end-point for different media types
 - URI for JSON: localhost:8090/sample/transaction [GET]
